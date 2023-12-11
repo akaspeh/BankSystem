@@ -29,7 +29,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-      frontend:
+  frontend:
     image: node:14
     working_dir: /app
     volumes:
