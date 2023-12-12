@@ -61,6 +61,8 @@ export class LoginComponent implements OnInit {
             } else if (this.authService.getStatus() === 'failed') {
               this.loginForm.reset();
               console.log('Authentication failed');
+            } else {
+              console.log('Wrong password');
             }
           }
         })
