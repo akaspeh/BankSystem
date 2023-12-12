@@ -4,11 +4,8 @@ from BackEnd.DBSystem.DBs.PostGres import *
 from BackEnd.DBSystem.DBs.Mongo import *
 from BackEnd.Config import *
 import logging
-from flask_cors import CORS
-from flask import jsonify, request , Flask
 
-app = Flask(__name__)
-CORS(app, supports_credentials=True, methods=['GET', 'POST', 'PUT', 'DELETE'])
+
 
 
 class DBsystem:
@@ -27,24 +24,3 @@ class DBsystem:
 
             except Exception as e:
                 logging.error(e)
-
-    @app.route('/api/auth/login', methods=['POST'])
-    def get_user():
-        data = request.get_json()
-        email = data['email']
-        password = data['password']
-
-        print(email)
-
-        # Перетворюємо об'єкт на словник перед серіалізацією в JSON
-        result_dict = {
-            'userDto': {
-                'id': "awdad",
-                'userName': "adawda",
-                'email': "awdada",
-                'role': "awdawd",
-            },
-            'status': "failed",
-        }
-
-        return jsonify(result_dict)
