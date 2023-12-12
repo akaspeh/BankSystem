@@ -13,11 +13,11 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/pgdata
     restart: always
-  backend:
-    build:
-      context: ./BackEnd
-    ports:
-      - "5000:5000"
+#  backend:
+#    build:
+#      context: ./BackEnd
+#    ports:
+#      - "5000:5000"
 
 volumes:
   postgres_data:
