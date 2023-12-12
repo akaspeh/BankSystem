@@ -1,0 +1,17 @@
+
+<div class="container">
+  <mat-form-field>
+    <mat-label>Enter your email</mat-label>
+    <input matInput placeholder="mail@example.com" [formControl]="$any(loginForm.controls['email'])">
+    <mat-error *ngIf="loginForm.controls['email'].invalid">{{getErrorMessage('email')}}</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Enter your password</mat-label>
+    <input matInput [type]="hide ? 'password' : 'text'" [formControl]="$any(loginForm.controls['password'])">
+    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+    <mat-error *ngIf="loginForm.controls['password'].invalid">{{getErrorMessage('password')}}</mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="login()">Log in</button>
+</div>
