@@ -1,5 +1,7 @@
+from configparser import ConfigParser
 
-class ConfigPostgres():
+parser = ConfigParser()
+class ConfigPostgres:
     host = 'localhost'
     db = "postgres"
     user = "myuser"
@@ -11,7 +13,7 @@ class ConfigMongo():
     db = "mongo"
     user = "mymongoadmin"
     password = "mymongopassword"
-    port = "27017:27017"
+    port = 27017
 
 class ConfigRedis():
     host = 'localhost'
