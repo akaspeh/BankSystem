@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpInternalService} from "./http-internal.service";
 import {UserSigninDto} from "../../models/user/user-signin-dto";
-import {UserDto} from "../../models/user/user-dto";
+import {RegistrationDto} from "../../models/user/registration-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,6 @@ export class RegistrationService {
   constructor(private http: HttpInternalService) { }
 
   public regClient(userSigninDto: UserSigninDto){
-    return this.http.postRequest<UserDto>(`${this.authRoutePrefix}/create-account`, userSigninDto);
+    return this.http.postRequest<RegistrationDto>(`${this.authRoutePrefix}/create-account`, userSigninDto);
   }
 }
