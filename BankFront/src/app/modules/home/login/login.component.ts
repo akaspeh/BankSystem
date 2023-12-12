@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
-import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {AuthService} from "../../../core/services/auth.service";
@@ -61,6 +61,8 @@ export class LoginComponent implements OnInit {
             } else if (this.authService.getStatus() === 'failed') {
               this.loginForm.reset();
               console.log('Authentication failed');
+            } else {
+              console.log('Wrong password');
             }
           }
         })
