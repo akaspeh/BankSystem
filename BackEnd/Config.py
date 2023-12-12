@@ -13,7 +13,7 @@ class ConfigMongo():
     db = "mongo"
     user = "mymongoadmin"
     password = "mymongopassword"
-    port = "27017:27017"
+    port = 27017
 
 class ConfigRedis():
     host = 'localhost'
