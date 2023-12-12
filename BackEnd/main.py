@@ -2,10 +2,12 @@
 from DBSystem.DBsystem import *
 
 
+
+
+
 class Application:
     def __init__(self):
         self.dbsystem = DBsystem()
-        print("wdas")
 
     def run(self):
         self.dbsystem.create_tables()
