@@ -7,6 +7,8 @@ import {MatButtonModule} from "@angular/material/button";
 import {AuthService} from "../../../core/services/auth.service";
 import {UserLoginDto} from "../../../models/user/user-login-dto";
 import {NgIf} from "@angular/common";
+import {UserWithStatusDto} from "../../../models/user/user-with-status-dto";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -20,7 +22,7 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup = new FormGroup({});
   hide = true;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
   }
 
   public closeModal() {
@@ -47,8 +49,19 @@ export class LoginComponent implements OnInit {
 
       this.authService.login(user)
         .subscribe({
-          next: () => {
-            this.closeModal();
+          next: (userWithStatusDto: UserWithStatusDto) => {
+            if (this.authService.getStatus() === 'succeed') {
+              if (userWithStatusDto.userDto.role === 'admin') {
+                this.router.navigate(['/admin'])
+              } else {
+                this.router.navigate(['/client'])
+              }
+              this.closeModal();
+              console.log(this.authService.getStatus())
+            } else if (this.authService.getStatus() === 'failed') {
+              this.loginForm.reset();
+              console.log('Authentication failed');
+            }
           }
         })
     } else {
