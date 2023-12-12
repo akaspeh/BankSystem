@@ -13,13 +13,35 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/pgdata
     restart: always
-  backend:
-    build:
-      context: ./BackEnd
+
+  redis:
+    image: redis:7.2.3
     ports:
-      - "5000:5000"
+      - "6379:6379"
+    environment:
+      REDIS_PASSWORD: myredispassword
+    restart: always
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mymongoadmin
+      MONGO_INITDB_ROOT_PASSWORD: mymongopassword
+    volumes:
+      - mongodb_data:/data/db
+    restart: always
+
+
+#  backend:
+#    build:
+#      context: ./BackEnd
+#    ports:
+#      - "5000:5000"
 
 volumes:
   postgres_data:
+  mongodb_data:
 
 
