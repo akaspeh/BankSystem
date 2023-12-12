@@ -3,6 +3,7 @@
   <mat-form-field>
     <mat-label>Enter your email</mat-label>
     <input matInput placeholder="mail@example.com" [formControl]="$any(signinForm.controls['email'])">
+    <mat-error *ngIf="signinForm.controls['email'].hasError('invalidEmail')">Such an account already exists</mat-error>
     <mat-error *ngIf="signinForm.controls['email'].invalid">{{getErrorMessage('email')}}</mat-error>
   </mat-form-field>
   <mat-form-field>

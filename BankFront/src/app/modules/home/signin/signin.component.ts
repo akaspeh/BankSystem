@@ -8,6 +8,8 @@ import {RegistrationService} from "../../../core/services/registration.service";
 import {NgIf} from "@angular/common";
 import {UserLoginDto} from "../../../models/user/user-login-dto";
 import {UserSigninDto} from "../../../models/user/user-signin-dto";
+import {RegistrationDto} from "../../../models/user/registration-dto";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-signin',
@@ -28,7 +30,7 @@ export class SigninComponent implements OnInit{
   public signinForm: FormGroup = new FormGroup({});
   hide = true;
 
-  constructor(private fb: FormBuilder, private registration: RegistrationService) {
+  constructor(private fb: FormBuilder, private registration: RegistrationService, private router: Router) {
   }
 
   public closeModal() {
@@ -59,8 +61,14 @@ export class SigninComponent implements OnInit{
 
       this.registration.regClient(newUser)
         .subscribe({
-          next: () => {
-            this.closeModal();
+          next: (registrationDto: RegistrationDto) => {
+            if (registrationDto.status === 'wrong email') {
+              this.signinForm.controls['email'].setErrors({'invalidEmail': true});
+              console.log('Wrong email')
+            } else {
+              this.closeModal();
+              this.router.navigate(['/home/login']);
+            }
           }
         })
     } else {
