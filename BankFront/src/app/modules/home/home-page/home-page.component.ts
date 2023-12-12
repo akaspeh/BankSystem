@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {MatButtonModule} from "@angular/material/button";
 import {LoginComponent} from "../login/login.component";
-import {RouterOutlet} from "@angular/router";
+import {RouterLink, RouterOutlet} from "@angular/router";
 
 @Component({
   selector: 'app-home-page',
@@ -9,7 +9,8 @@ import {RouterOutlet} from "@angular/router";
   imports: [
     MatButtonModule,
     LoginComponent,
-    RouterOutlet
+    RouterOutlet,
+    RouterLink
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css'
