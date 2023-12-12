@@ -6,7 +6,6 @@ import {MatInputModule} from "@angular/material/input";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {RegistrationService} from "../../../core/services/registration.service";
 import {NgIf} from "@angular/common";
-import {UserLoginDto} from "../../../models/user/user-login-dto";
 import {UserSigninDto} from "../../../models/user/user-signin-dto";
 import {RegistrationDto} from "../../../models/user/registration-dto";
 import {Router} from "@angular/router";
