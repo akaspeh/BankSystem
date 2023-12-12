@@ -1,5 +1,7 @@
+from configparser import ConfigParser
 
-class ConfigPostgres():
+parser = ConfigParser()
+class ConfigPostgres:
     host = 'localhost'
     db = "postgres"
     user = "myuser"
