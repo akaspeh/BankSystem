@@ -9,3 +9,8 @@
 .container mat-form-field {
   width: 100%;
 }
+
+.container h1 {
+  padding-bottom: 20px;
+  font-size: 36px;
+}

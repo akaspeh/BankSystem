@@ -12,6 +12,8 @@ export class AuthService {
   private readonly authRoutePrefix = '/api/auth';
   private currentUserSource = new BehaviorSubject<UserDto | null>(null);
   public currentUser$ = this.currentUserSource.asObservable();
+  private authStatusSource = new BehaviorSubject<string | null>(null);
+  public authStatus$ = this.authStatusSource.asObservable();
 
   constructor(private http: HttpInternalService) { }
 
@@ -23,23 +25,24 @@ export class AuthService {
       }))
   }
 
-  public setStatus(status: string) {
-    localStorage.setItem('authStatus', status);
+  public logout(): void {
+    this.currentUserSource.next(null);
+    this.clearStatus();
   }
 
-  public getStatus(): string | null {
-    return localStorage.getItem('authStatus');
+  public setStatus(status: string): void {
+    this.authStatusSource.next(status);
   }
 
-  public clearStatus() {
-    localStorage.removeItem('authStatus');
+  public clearStatus(): void {
+    this.authStatusSource.next(null);
   }
 
-  public setCurrentUser(userDto: UserDto) {
-    const status = this.getStatus();
-    if (status !== "succeed"){
-      return;
-    }
-    this.currentUserSource.next(userDto);
+  public setCurrentUser(userDto: UserDto): void {
+    this.authStatus$.subscribe((status: string | null) => {
+      if (status === 'succeed') {
+        this.currentUserSource.next(userDto);
+      }
+    });
   }
 }

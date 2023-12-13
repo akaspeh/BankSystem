@@ -1,1 +1,13 @@
-<p>transaction works!</p>
+<mat-expansion-panel (opened)="panelOpenState = true"
+                     (closed)="panelOpenState = false"
+                     *ngIf="transaction">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{transaction.date}}
+    </mat-panel-title>
+    <mat-panel-description>
+      {{transaction.amount}}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <p>{{transaction.description}}</p>
+</mat-expansion-panel>

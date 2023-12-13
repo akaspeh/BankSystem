@@ -46,25 +46,24 @@ export class LoginComponent implements OnInit {
   public login() {
     if (this.loginForm.valid) {
       const user: UserLoginDto = this.loginForm.value;
-
-      this.authService.login(user)
+        this.authService.login(user)
         .subscribe({
           next: (userWithStatusDto: UserWithStatusDto) => {
-            if (this.authService.getStatus() === 'succeed') {
+            if (userWithStatusDto.status === 'succeed') {
               if (userWithStatusDto.userDto.role === 'admin') {
                 this.router.navigate(['/admin']);
               } else {
                 this.router.navigate(['/client']);
               }
               this.closeModal();
-              console.log(this.authService.getStatus());
-            } else if (this.authService.getStatus() === 'failed') {
+            } else if (userWithStatusDto.status === 'failed') {
               this.loginForm.reset();
-              console.log('Authentication failed');
             } else {
               this.loginForm.controls['password'].setErrors({'invalidPassword': true});
-              console.log('Wrong password');
             }
+            this.authService.authStatus$.subscribe((status: string | null) => {
+              console.log(status);
+            });
           }
         })
     } else {

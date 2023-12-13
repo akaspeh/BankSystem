@@ -1,5 +1,6 @@
 
 <div class="container">
+  <h1>Create account</h1>
   <mat-form-field>
     <mat-label>Enter your email</mat-label>
     <input matInput placeholder="mail@example.com" [formControl]="$any(signinForm.controls['email'])">
@@ -34,5 +35,5 @@
     <input matInput [formControl]="$any(signinForm.controls['address'])">
     <mat-error *ngIf="signinForm.controls['address'].invalid">{{getErrorMessage('address')}}</mat-error>
   </mat-form-field>
-  <button mat-raised-button color="primary" (click)="createAccount()">Create account</button>
+  <button mat-raised-button color="primary" (click)="createAccount()">Create</button>
 </div>
