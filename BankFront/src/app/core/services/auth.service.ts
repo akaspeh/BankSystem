@@ -30,15 +30,15 @@ export class AuthService {
     this.clearStatus();
   }
 
-  public setStatus(status: string): void {
+  private setStatus(status: string): void {
     this.authStatusSource.next(status);
   }
 
-  public clearStatus(): void {
+  private clearStatus(): void {
     this.authStatusSource.next(null);
   }
 
-  public setCurrentUser(userDto: UserDto): void {
+  private setCurrentUser(userDto: UserDto): void {
     this.authStatus$.subscribe((status: string | null) => {
       if (status === 'succeed') {
         this.currentUserSource.next(userDto);

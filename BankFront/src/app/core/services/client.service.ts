@@ -13,4 +13,8 @@ export class ClientService {
   public getAllTransactions(userIdDto: UserIdDto) {
     return this.http.getRequest<TransactionListDto>(`${this.clientRoutePrefix}/transaction/all`, userIdDto);
   }
+
+  public getAllLoans(userIdDto: UserIdDto) {
+    return this.http.getRequest<TransactionListDto>(`${this.clientRoutePrefix}/transaction/all`, userIdDto);
+  }
 }

@@ -3,16 +3,18 @@ import {TransactionComponent} from "../../../shared/components/transaction/trans
 import {ClientService} from "../../../core/services/client.service";
 import {AuthService} from "../../../core/services/auth.service";
 import {UserDto} from "../../../models/user/user-dto";
-import {RouterOutlet} from "@angular/router";
 import {MatExpansionModule} from "@angular/material/expansion";
+import {MatTabsModule} from "@angular/material/tabs";
+import {RouterOutlet} from "@angular/router";
 
 @Component({
   selector: 'app-client-page',
   standalone: true,
   imports: [
     TransactionComponent,
+    MatExpansionModule,
+    MatTabsModule,
     RouterOutlet,
-    MatExpansionModule
   ],
   templateUrl: './client-page.component.html',
   styleUrl: './client-page.component.css'

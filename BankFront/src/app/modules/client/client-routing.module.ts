@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {ClientPageComponent} from "./client-page/client-page.component";
-import {TransactionsComponent} from "./transactions/transactions.component";
-import {LoansComponent} from "./loans/loans.component";
+import {ListsComponent} from "./lists/lists.component";
 
 const routes: Routes = [
   {
@@ -10,14 +9,10 @@ const routes: Routes = [
     component: ClientPageComponent,
     children: [
       {
-        path: 'transactions',
-        component: TransactionsComponent
+        path: 'lists',
+        component: ListsComponent
       },
-      {
-        path: 'loans',
-        component: LoansComponent
-      },
-      { path: '', redirectTo: 'transactions', pathMatch: 'full' }
+      { path: '', redirectTo: 'lists', pathMatch: 'full' }
     ]
   }
 ];
