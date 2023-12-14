@@ -19,8 +19,15 @@ class DBsystem:
     def create_tables(self):
         with self.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
             try:
-                cursor.execute(f"CREATE TABLE IF NOT EXISTS users (id bigint, email text, password text, firstname text, lastname text,"
-                           f"phone text, address text)")
+                cursor.execute(f"CREATE TABLE IF NOT EXISTS users (id bigint, email text, password text, "# можна юзнути uuid для id та додати поле з інфою про адмінство юзера
+                               f"firstname text, lastname text, phone text, address text)")
+
+                cursor.execute(f"CREATE TABLE IF NOT EXISTS transactions (id bigint, date text, amount int, " #можна в дату спробувати тип даних date
+                               f"senderID bigint, receiverID bigint, description text)")
+
+                cursor.execute(f"CREATE TABLE IF NOT EXISTS loans (id bigint, accountID bigint, amount int, "
+                               f"interestRate real, openingDate text, closingDate text)")
+
 
             except Exception as e:
                 logging.error(e)

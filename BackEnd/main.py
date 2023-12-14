@@ -2,6 +2,8 @@
 from DBSystem.DBsystem import *
 from flask_cors import CORS
 from flask import jsonify, request, Flask
+
+
 class Application:
     def __init__(self):
         self.dbsystem = DBsystem()
@@ -53,8 +55,7 @@ class Application:
                 'status': 'failed'}
             return jsonify(result_dict)
         else:
-            if self.redis_get_element(
-                    user.email) is user.password:  # дописати після реляційки цей іф(потрібно просто дістати поля)...
+            if self.redis_get_element(user.email) is user.password:  # дописати після реляційки цей іф(потрібно просто дістати поля)...
                 return;
             else:
                 result_dict = {
