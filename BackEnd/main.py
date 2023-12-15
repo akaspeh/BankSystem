@@ -49,7 +49,7 @@ class Application:
         data = request.get_json()
         user = UserSignInInfo(email=data['email'], password=data['password'])
 
-        if self.redis_get_element(user.email) is 'false':
+        if self.redis_get_element(user.email) == 'false':
             result_dict = {
                 'userDto': {'id': '', 'userName': '', 'email': '', 'role': ''},
                 'status': 'failed'}
@@ -68,7 +68,7 @@ class Application:
         user = UserSignInInfo(email=data['email'], password=data['password'], first_name=data['firstName'],
                               last_name=data['lastName'], phone=data['phone'], address=data['address'])
 
-        if self.redis_get_element(user.email) is 'false':
+        if self.redis_get_element(user.email) == 'false':
             self.dbsystem.redis.set(key=user.email, value=user.password)  # після цього додати додавання в реляційку екземпляра
 
             return jsonify({'status': 'succeed'})
