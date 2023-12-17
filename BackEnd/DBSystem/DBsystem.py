@@ -30,10 +30,8 @@ class DBsystem:
 
                 cursor.execute(
                     f"CREATE TABLE IF NOT EXISTS LOANS ("
-                    f"loan_id SERIAL PRIMARY KEY, "
-                    f"amount FLOAT,"
-                    f"data TIMESTAMP,"
-                    f"interest_rate FLOAT,"
+                    f"card SERIAL PRIMARY KEY, "
+                    f"balance FLOAT,"
                     f"user_id bigint REFERENCES USERS(id))")
 
                 cursor.execute(

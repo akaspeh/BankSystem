@@ -45,3 +45,4 @@ class UserSignInInfo:
          self.name = name
          self.phone = phone
          self.address = address
+
