@@ -1,1 +1,13 @@
-<p>loan works!</p>
+<mat-expansion-panel (opened)="panelOpenState = true"
+                     (closed)="panelOpenState = false"
+                     *ngIf="loan">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{loan.amount}}
+    </mat-panel-title>
+    <mat-panel-description>
+      {{loan.closingDate}}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <p>{{loan.openingDate}}</p>
+</mat-expansion-panel>

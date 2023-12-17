@@ -1,1 +1,4 @@
-<p>client-details works!</p>
+<mat-list-item *ngIf="user">
+  <button mat-button [ngClass]="{'selected': selected}">{{user.userName}}</button>
+</mat-list-item>
+<mat-divider></mat-divider>

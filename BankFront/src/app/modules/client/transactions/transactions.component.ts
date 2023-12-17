@@ -4,7 +4,6 @@ import {TransactionListDto} from "../../../models/transaction/transaction-list-d
 import {UserDto} from "../../../models/user/user-dto";
 import {ClientService} from "../../../core/services/client.service";
 import {AuthService} from "../../../core/services/auth.service";
-import {UserIdDto} from "../../../models/user/user-id-dto";
 import {TransactionComponent} from "../../../shared/components/transaction/transaction.component";
 import {NgForOf} from "@angular/common";
 import {BaseComponent} from "../../../core/base/base.component";
@@ -36,10 +35,7 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
 
   private getTransactions() {
     if (this.currentUser) {
-      const userIdDto: UserIdDto = {
-        id: this.currentUser.id
-      }
-      this.clientService.getAllTransactions(userIdDto)
+      this.clientService.getAllTransactions(this.currentUser.id)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe({
           next: transactions => {
