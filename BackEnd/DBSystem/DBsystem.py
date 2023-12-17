@@ -21,7 +21,7 @@ class DBsystem:
             try:
                 cursor.execute(
                     f"CREATE TABLE IF NOT EXISTS USERS ("
-                    f"id bigint PRIMARY KEY,"
+                    f"id SERIAL PRIMARY KEY,"
                     f"name text, "
                     f"email text, "
                     f"phone text,"
@@ -30,23 +30,24 @@ class DBsystem:
 
                 cursor.execute(
                     f"CREATE TABLE IF NOT EXISTS LOANS ("
-                    f"card bigint PRIMARY KEY, "
+                    f"card SERIAL PRIMARY KEY, "
                     f"balance FLOAT,"
                     f"user_id bigint REFERENCES USERS(id))")
 
                 cursor.execute(
                     f"CREATE TABLE IF NOT EXISTS CARDS ("
-                    f"card bigint PRIMARY KEY, "
+                    f"card SERIAL PRIMARY KEY, "
                     f"balance FLOAT,"
                     f"user_id bigint REFERENCES USERS(id))")
 
                 cursor.execute(
                     f"CREATE TABLE IF NOT EXISTS TRANSACTIONS ("
-                    f"id bigint PRIMARY KEY, "
+                    f"id SERIAL PRIMARY KEY, "
                     f"data TIMESTAMP, "
                     f"amount FLOAT, "
                     f"description text,"
-                    f"user_id bigint REFERENCES USERS(id))")
+                    f"user_id_sender bigint REFERENCES USERS(id),"
+                    f"user_id_reciver bigint REFERENCES USERS(id))")
             except Exception as e:
                 logging.error(e)
     def redis_get_element(self, key):
