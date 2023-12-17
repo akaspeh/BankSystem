@@ -1,0 +1,23 @@
+header {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding-right: 14%;
+  height: 40px;
+}
+
+.client-info {
+  padding-left: 14%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+}
+
+.left-column h1 {
+  font-size: 40px;
+}
+
+.left-column h2 {
+  font-size: 18px;
+  color: darkgrey;
+}

@@ -1,1 +1,4 @@
 <p>loans works!</p>
+<mat-accordion>
+  <app-loan *ngFor="let loan of loans?.items" [loan]="loan"></app-loan>
+</mat-accordion>
