@@ -13,10 +13,10 @@ class BANK:
 
         with self.dbsystem.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
             try:
-                cursor.execute(f"UPDATE CARDS SET balance = balance - data['amount'] WHERE card = data['cardholder'] ")
-                cursor.execute(f"UPDATE CARDS SET balance = balance + data['amount'] WHERE card = data['cardreciver'] ")
+                cursor.execute(f"UPDATE CARDS SET balance = balance - {data['amount']} WHERE card = {data['cardholder']} ")
+                cursor.execute(f"UPDATE CARDS SET balance = balance + {data['amount']} WHERE card = {data['cardreciver']} ")
                 cursor.execute(f"INSERT INTO TRANSACTIONS (data, amount, description, user_id_sender, user_id_reciver)"
-                f"VALUES (data.today(), data['amount'], data['description'], data['cardholder'],data['cardreciver'])")
+                               f"VALUES ('{date.today()}', {data['amount']}, '{data['description']}', {data['cardholder']}, {data['cardreciver']})")
 
                 current_balance = self.get_balance(data['cardholder'])
                 if current_balance != original_balance - data['amount']:

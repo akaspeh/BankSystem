@@ -1,5 +1,5 @@
 from flask import jsonify, request
-from abc import ABC, abstractmethod
+
 class User:
     def __init__(self, dbsystem):
         self.__isAdmin = False
