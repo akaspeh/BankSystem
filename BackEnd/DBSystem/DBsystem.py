@@ -6,8 +6,6 @@ from BackEnd.Config import *
 import logging
 
 
-
-
 class DBsystem:
     def __init__(self):
         self.redis = Redis(host=ConfigRedis.host, port=ConfigRedis.port, db=ConfigRedis.db, password=ConfigRedis.password,
@@ -20,7 +18,7 @@ class DBsystem:
         with self.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
             try:
                 cursor.execute(
-                    f"CREATE TABLE IF NOT EXISTS USERS ("
+                    f"CREATE TABLE IF NOT EXISTS USERS("
                     f"id SERIAL PRIMARY KEY,"
                     f"name text, "
                     f"email text, "

@@ -12,7 +12,13 @@ class Application:
         CORS(self.app, supports_credentials=True, methods=['GET', 'POST', 'PUT', 'DELETE'])
         self.setup_routes()
     def setup_routes(self):
+        self.app.route('/api/reg/create-account', methods=['POST'])(self.BANK.user.login)
         self.app.route('/api/auth/login', methods=['POST'])(self.BANK.user.login)
+        self.app.route('/api/client/transaction/all/${userId}', methods=['GET'])(self.BANK.admin.findAllTransactions)
+        self.app.route('/api/client/loan/all/${userId}', methods=['GET'])(self.BANK.admin.findAllLoan)
+        self.app.route('/api/client/transaction/create', methods=['POST'])(self.BANK.transaction)
+        self.app.route('/api/client/loan/create', methods=['POST'])(self.BANK.createLoan)
+        self.app.route('/api/client/find/${search}', methods=['POST'])(self.BANK.admin.clientSearch)
 
     def run(self):
         self.dbsystem.create_tables()
