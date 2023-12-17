@@ -20,57 +20,42 @@ class DBsystem:
         with self.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
             try:
                 cursor.execute(
-                    f"CREATE TABLE IF NOT EXISTS CUSTOMERS ("
+                    f"CREATE TABLE IF NOT EXISTS USERS ("
                     f"id bigint PRIMARY KEY,"
                     f"name text, "
                     f"email text, "
-                    f"phone text, address text, role text)")
+                    f"phone text,"
+                    f"address text, "
+                    f"role text)")
 
                 cursor.execute(
-                    f"CREATE TABLE IF NOT EXISTS CUSTOMER_PURCHASE ("
-                    f"id bigint PRIMARY KEY, "
-                    f"date text, "
-                    f"amount FLOAT, "
-                    f"description text," #можна в дату спробувати тип даних date
-                    f"Product_and_services_code bigint REFERENCES CUSTOMERS(id), "
-                    f"cusomer_id bigint REFERENCES CUSTOMERS(id))")
+                    f"CREATE TABLE IF NOT EXISTS LOANS ("
+                    f"card bigint PRIMARY KEY, "
+                    f"balance FLOAT,"
+                    f"user_id bigint REFERENCES USERS(id))")
 
                 cursor.execute(
-                    f"CREATE TABLE IF NOT EXISTS MERCHANTS ("
-                    f"id bigint PRIMARY KEY, "
-                    f"name text, "
-                    f"email text,"
-                    f"phone text, "
-                    f"address text)")
-
-                cursor.execute(
-                    f"CREATE TABLE IF NOT EXISTS PRODUCT_AND_SERVICES ("
-                    f"code bigint PRIMARY KEY, "
-                    f"description text, "
-                    f"merchant_id bigint REFERENCES MERCHANTS(id))")
-
-                cursor.execute(
-                    f"CREATE TABLE IF NOT EXISTS ACCOUNTS_TYPES ("
-                    f"code int PRIMARY KEY, "
-                    f"type text)")
-
-                cursor.execute(
-                    f"CREATE TABLE IF NOT EXISTS ACCOUNTS ("
-                    f"id bigint PRIMARY KEY, "
-                    f"name text, "
-                    f"cusomer_id bigint REFERENCES CUSTOMERS(id),"
-                    f"account_code int REFERENCES ACCOUNTS_TYPES(code))")
+                    f"CREATE TABLE IF NOT EXISTS CARDS ("
+                    f"card bigint PRIMARY KEY, "
+                    f"balance FLOAT,"
+                    f"user_id bigint REFERENCES USERS(id))")
 
                 cursor.execute(
                     f"CREATE TABLE IF NOT EXISTS TRANSACTIONS ("
                     f"id bigint PRIMARY KEY, "
                     f"data TIMESTAMP, "
                     f"amount FLOAT, "
-                    f"description text, "
-                    f"purchase_id bigint REFERENCES CUSTOMER_PURCHASE(id) ,"
-                    f"account_id bigint REFERENCES ACCOUNTS(id))")
-
-
-
+                    f"description text,"
+                    f"user_id bigint REFERENCES USERS(id))")
             except Exception as e:
                 logging.error(e)
+    def redis_get_element(self, key):
+        value = self.dbsystem.redis.get(key)
+
+        if value is None:
+            return 'false'
+        else:
+            return value
+
+
+
