@@ -28,7 +28,7 @@ class BANK:
         with self.dbsystem.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
             try:
                 cursor.execute(f"INSERT INTO LOANS (amount,data,interest_rate,user_id)"
-                f"VALUES (data['amount'],data['data'],data['interest_rate'],data['user_id'])")
+                f"VALUES ({data['amount']},{data['data']},{data['interest_rate']},{data['user_id']})")
             except Exception as e:
                 logging.error(e)
 
