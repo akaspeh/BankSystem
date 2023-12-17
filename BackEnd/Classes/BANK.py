@@ -3,6 +3,7 @@ import psycopg2
 import psycopg2.extras
 import logging
 from datetime import date
+
 class BANK:
     def __init__(self, dbsystem):
         self.user = User(dbsystem)

@@ -1,4 +1,5 @@
 from flask import jsonify, request
+from BackEnd.utils import UserSignInInfo
 
 class User:
     def __init__(self, dbsystem):
@@ -37,12 +38,5 @@ class User:
 
 
 
-class UserSignInInfo:
 
-     def __init__(self, email, password, name, phone, address):
-         self.email = email
-         self.password = password
-         self.name = name
-         self.phone = phone
-         self.address = address
 
