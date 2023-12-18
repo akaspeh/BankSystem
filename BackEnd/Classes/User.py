@@ -7,22 +7,22 @@ class User:
         self.__dbsystem = dbsystem
     def login(self):
         data = request.get_json()
-        user = UserSignInInfo(email=data['email'], password=data['password'])
+        # user = UserSignInInfo(email=data['email'], password=data['password'])
 
-        if self.__dbsystem.redis_get_element(user.email) == 'false':
-            result_dict = {
-                'userDto': {'id': '', 'userName': '', 'email': '', 'role': ''},
-                'status': 'failed'}
-            return jsonify(result_dict)
-        else:
-            if self.__dbsystem.redis_get_element(
-                    user.email) is user.password:  # дописати після реляційки цей іф(потрібно просто дістати поля)...
-                return
-            else:
-                result_dict = {
-                    'userDto': {'id': '', 'userName': '', 'email': '', 'role': ''},
-                    'status': 'wrong password'}
-                return jsonify(result_dict)
+        # if self.__dbsystem.redis_get_element(user.email) == 'false':
+        #     result_dict = {
+        #         'userDto': {'id': '', 'userName': '', 'email': '', 'role': ''},
+        #         'status': 'failed'}
+        #     return jsonify(result_dict)
+        # else:
+        #     if self.__dbsystem.redis_get_element(
+        #             user.email) is user.password:  # дописати після реляційки цей іф(потрібно просто дістати поля)...
+        #         return
+        #     else:
+        result_dict = {
+            'userDto': {'id': '', 'userName': '', 'email': '', 'role': ''},
+            'status': 'wrong password'}
+        return jsonify(result_dict)
     def sign_in(self):
         data = request.get_json()
         user = UserSignInInfo(email=data['email'], password=data['password'], name=data['name']

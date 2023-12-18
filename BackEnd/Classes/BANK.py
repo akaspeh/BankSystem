@@ -4,7 +4,7 @@ import psycopg2
 import psycopg2.extras
 import logging
 from datetime import date
-
+from flask_cors import CORS
 
 class BANK:
     def __init__(self, dbsystem):

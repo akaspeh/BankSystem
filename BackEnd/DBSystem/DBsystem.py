@@ -49,7 +49,7 @@ class DBsystem:
             except Exception as e:
                 logging.error(e)
     def redis_get_element(self, key):
-        value = self.dbsystem.redis.get(key)
+        value = self.redis.get(key)
 
         if value is None:
             return 'false'
