@@ -75,17 +75,17 @@ class Admin:
                 query = """
                     SELECT *
                     FROM USERS
-                    WHERE name ILIKE %s
+                    WHERE name LIKE %s
                     """
 
                 cursor.execute(query, ('%' + search + '%',))
 
                 # Получение результатов
-                rows = cursor.fetchall()
+                # rows = cursor.fetchall()
                 user_data = cursor.fetchall()
 
                 # Формирование объектов TransactionDto из результатов
-                items = [UserDto(*user) for user in user_data]
+                items = [UserDto(user['id'], user['name'], user['email'], user['role']).to_dict() for user in user_data]
 
                 # Создание объекта TransactionListDto
                 result_dict = {

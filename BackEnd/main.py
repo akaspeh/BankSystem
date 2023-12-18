@@ -19,7 +19,7 @@ class Application:
         self.app.route('/api/client/loan/all/<int:userId>', methods=['GET'])(self.BANK.admin.findAllLoan)
         self.app.route('/api/client/transaction/create', methods=['POST'])(self.BANK.transaction)
         self.app.route('/api/client/loan/create', methods=['POST'])(self.BANK.createLoan)
-        self.app.route('/api/client/find/<string:search>', methods=['POST'])(self.BANK.admin.clientSearch)
+        self.app.route('/api/client/find/<string:search>', methods=['GET'])(self.BANK.admin.clientSearch) #GET, а не POST
 
     def run(self):
         self.dbsystem.create_tables()
