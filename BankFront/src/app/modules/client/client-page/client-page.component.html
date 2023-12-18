@@ -5,11 +5,10 @@
   <button mat-button color="warn" (click)="logout()">LogOut</button>
 </header>
 <div class="client-info">
-<!--  <h1>{{currentUser?.userName}}</h1>-->
   <div class="left-column">
-    <h1>Current User</h1>
-    <h2>user#email.com</h2>
-    <p>1000</p>
+    <h1>{{currentUser?.userName}}</h1>
+    <h2>{{currentUser?.email}}</h2>
+    <p>{{userBalance?.balance}}</p>
   </div>
 </div>
 <router-outlet></router-outlet>
