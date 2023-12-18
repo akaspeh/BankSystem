@@ -17,6 +17,6 @@ class ConfigMongo():
 
 class ConfigRedis():
     host = 'localhost'
-    db = "redis"
+    db = 0
     password = "myredispassword"
-    port = "6379:6379"
+    port = 6379

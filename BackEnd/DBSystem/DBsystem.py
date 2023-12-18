@@ -4,12 +4,12 @@ from BackEnd.DBSystem.DBs.PostGres import *
 from BackEnd.DBSystem.DBs.Mongo import *
 from BackEnd.Config import *
 import logging
+import redis
 
 
 class DBsystem:
     def __init__(self):
-        self.redis = Redis(host=ConfigRedis.host, port=ConfigRedis.port, db=ConfigRedis.db, password=ConfigRedis.password,
-                      decode_responses=True)
+        self.redis = Redis(host=ConfigRedis.host, port=ConfigRedis.port, db=ConfigRedis.db)
         self.postgres = PostGres(host=ConfigPostgres.host, db=ConfigPostgres.db,
                             username=ConfigPostgres.user, password=ConfigPostgres.password)
         self.mongo = Mongo(host=ConfigMongo.host, port=ConfigMongo.port)
@@ -49,7 +49,7 @@ class DBsystem:
             except Exception as e:
                 logging.error(e)
     def redis_get_element(self, key):
-        value = self.redis.get(key)
+        value = self.redis.redis_client.get(key)
 
         if value is None:
             return 'false'
