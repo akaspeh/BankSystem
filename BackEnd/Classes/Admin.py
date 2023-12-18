@@ -69,7 +69,7 @@ class Admin:
                 }
                 return jsonify(result_dict)
 
-    def clientSearch(self,search):
+    def clientSearch(self, search):
         with self.__dbsystem.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
             try:
                 query = """
