@@ -16,11 +16,12 @@ class Admin:
                 cursor.execute(f"SELECT * FROM TRANSACTIONS WHERE user_id_sender = {userId} OR user_id_reciver = {userId}")
 
                 # Получение результатов
-                rows = cursor.fetchall()
                 transactions_data = cursor.fetchall()
 
                 # Формирование объектов TransactionDto из результатов
-                items = [TransactionDto(*transaction) for transaction in transactions_data]
+                items = [TransactionDto(transaction['id'], transaction['data'], transaction['amount'],
+                                        transaction['description'], transaction['user_id_sender'],
+                                        transaction['user_id_reciver']).to_dict() for transaction in transactions_data]
 
                 # Создание объекта TransactionListDto
                 result_dict = {
@@ -81,7 +82,6 @@ class Admin:
                 cursor.execute(query, ('%' + search + '%',))
 
                 # Получение результатов
-                # rows = cursor.fetchall()
                 user_data = cursor.fetchall()
 
                 # Формирование объектов TransactionDto из результатов

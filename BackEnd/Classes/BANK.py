@@ -11,19 +11,20 @@ class BANK:
         self.user = User(dbsystem)
         self.admin = Admin(dbsystem)
         self.dbsystem = dbsystem
-    def transaction(self): #ТУТ ПЖ СДЕЛАЙ ЮНИТ ТЕСТ ДОЛБАЕБ
+    def transaction(self):
         data = request.get_json()
         with self.dbsystem.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
             try:
+                today = date.today().strftime("%Y-%m-%d")
                 cursor.execute(f"UPDATE CARDS SET balance = balance - {data['amount']} WHERE card = {data['cardholder']} ")
-                cursor.execute(f"UPDATE CARDS SET balance = balance + {data['amount']} WHERE card = {data['cardreciver']} ")
+                cursor.execute(f"UPDATE CARDS SET balance = balance + {data['amount']} WHERE card = {data['cardreceiver']} ")
                 cursor.execute(f"INSERT INTO TRANSACTIONS (data, amount, description, user_id_sender, user_id_reciver)"
-                f"VALUES ({date.today()}, {data['amount']}, {data['description']}, {data['cardholder']}, {data['cardreciver']})")
+                f"VALUES ('{today}', {data['amount']}, '{data['description']}', {data['cardholder']}, {data['cardreceiver']})")
                 response = make_response('', 204)
                 return response
             except Exception as e:
-                abort(403)
                 logging.error(e)
+                abort(403)
     # def transactionUserToUser(self):
     #
     # def withdraw(self,card):

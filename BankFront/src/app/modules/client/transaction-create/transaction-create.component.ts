@@ -64,7 +64,8 @@ export class TransactionCreateComponent extends BaseComponent implements OnInit{
 
   private initializeForm() {
     this.transactionForm = this.fb.group({
-      amount: [null, [Validators.required, Validators.min(0), Validators.max(<number>this.userBalance?.balance)]],
+      //amount: [null, [Validators.required, Validators.min(0), Validators.max(<number>this.userBalance?.balance)]],
+      amount: [null, [Validators.required, Validators.min(0)]],
       description: ['']
     })
   }
@@ -74,7 +75,16 @@ export class TransactionCreateComponent extends BaseComponent implements OnInit{
       const transaction: TransactionCreationDto = this.transactionForm.value;
       transaction.cardholder = this.currentUser.id;
       transaction.cardreceiver = this.selectedUserId;
-      this.clientService.createTransaction(transaction);
+      console.log('create transaction')
+      this.clientService.createTransaction(transaction).
+      subscribe({
+        next: (response) => {
+          console.log('Transaction created successfully', response);
+        },
+        error: (error) => {
+          console.error('Error creating transaction', error);
+        }
+      });
       this.closeModal()
       this.router.navigate(['/client']);
     }
@@ -95,6 +105,7 @@ export class TransactionCreateComponent extends BaseComponent implements OnInit{
         .subscribe({
           next: userList => {
             this.users = userList;
+            this.users.items = this.users.items.filter(user => user.id !== this.currentUser?.id);
           }
         });
     }
