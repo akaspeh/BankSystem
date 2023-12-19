@@ -77,7 +77,17 @@ export class LoanCreateComponent implements OnInit {
       const newLoan: LoanCreationDto = this.loanForm.value;
       newLoan.closingDate = `${currentDay.getDate()}-${currentDay.getMonth() + 1}-${newLoan.closingDate}`;
       newLoan.userId = this.currentUser.id;
-      this.clientService.createLoan(newLoan);
+      this.clientService.createLoan(newLoan).
+      subscribe({
+        next: (response) => {
+          console.log('Loan created successfully', response);
+          this.closeModal();
+          this.router.navigate(['/client']);
+        },
+        error: (error) => {
+          console.error('Error creating loan', error);
+        }
+      });
       this.closeModal()
       this.router.navigate(['/client']);
     }

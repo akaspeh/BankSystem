@@ -80,13 +80,14 @@ export class TransactionCreateComponent extends BaseComponent implements OnInit{
       subscribe({
         next: (response) => {
           console.log('Transaction created successfully', response);
+          this.closeModal();
+          this.router.navigate(['/client']);
         },
         error: (error) => {
           console.error('Error creating transaction', error);
         }
       });
-      this.closeModal()
-      this.router.navigate(['/client']);
+
     }
   }
 
