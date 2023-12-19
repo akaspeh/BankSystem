@@ -11,7 +11,7 @@ class BANK:
         self.user = User(dbsystem)
         self.admin = Admin(dbsystem)
         self.dbsystem = dbsystem
-    def transaction(self):
+    def createTransaction(self):
         data = request.get_json()
         with self.dbsystem.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
             try:

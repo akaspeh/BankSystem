@@ -17,23 +17,13 @@ class Application:
         self.app.route('/api/auth/login', methods=['POST'])(self.BANK.user.login)
         self.app.route('/api/client/transaction/all/<int:userId>', methods=['GET'])(self.BANK.admin.findAllTransactions)
         self.app.route('/api/client/loan/all/<int:userId>', methods=['GET'])(self.BANK.admin.findAllLoan)
-        self.app.route('/api/client/transaction/create', methods=['POST'])(self.BANK.transaction)
+        self.app.route('/api/client/transaction/create', methods=['POST'])(self.BANK.createTransaction)
         self.app.route('/api/client/loan/create', methods=['POST'])(self.BANK.createLoan)
         self.app.route('/api/client/find/<string:search>', methods=['GET'])(self.BANK.admin.clientSearch) #GET, а не POST
 
     def run(self):
         self.dbsystem.create_tables()
         self.app.run(debug=True)
-
-
-class UserSignInInfo:
-
-    def __init__(self, email, password, name, phone, address):
-        self.email = email
-        self.password = password
-        self.name = name
-        self.phone = phone
-        self.address = address
 
 
 if __name__ == '__main__':
