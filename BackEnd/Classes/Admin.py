@@ -13,13 +13,15 @@ class Admin:
     def findAllTransactions(self, userId):
         with self.__dbsystem.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
             try:
-                cursor.execute(f"SELECT * FROM TRANSACTIONS WHERE user_id_sender = {userId} OR user_id_reciver = {userId}")
+                cursor.execute(f"SELECT * FROM TRANSACTIONS "
+                               f"WHERE user_id_sender = {userId} "
+                               f"OR user_id_reciver = {userId}")
 
                 # Получение результатов
                 transactions_data = cursor.fetchall()
 
                 # Формирование объектов TransactionDto из результатов
-                items = [TransactionDto(transaction['id'], transaction['data'], transaction['amount'],
+                items = [TransactionDto(transaction['id'], transaction['data'].strftime("%d-%m-%Y"), transaction['amount'],
                                         transaction['description'], transaction['user_id_sender'],
                                         transaction['user_id_reciver']).to_dict() for transaction in transactions_data]
 
@@ -43,17 +45,15 @@ class Admin:
     def findAllLoan(self,userId):
         with self.__dbsystem.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
             try:
-                cursor.execute(
-                    f"SELECT * FROM LOANS WHERE user_id = {userId}")
+                cursor.execute(f"SELECT * FROM LOANS WHERE user_id = {userId}")
 
                 # Получение результатов
-                rows = cursor.fetchall()
                 loans_data = cursor.fetchall()
 
-                # Формирование объектов TransactionDto из результатов
+                # Формирование объектов LoanDto из результатов
                 items = [LoanDto(*loan) for loan in loans_data]
 
-                # Создание объекта TransactionListDto
+                # Создание объекта LoanListDto
                 result_dict = {
                     'items': items,
                     'totalCount': len(items)
@@ -84,7 +84,7 @@ class Admin:
                 # Получение результатов
                 user_data = cursor.fetchall()
 
-                # Формирование объектов TransactionDto из результатов
+                # Формирование объектов ClientListDto из результатов
                 items = [UserDto(user['id'], user['name'], user['email'], user['role']).to_dict() for user in user_data]
 
                 # Создание объекта TransactionListDto

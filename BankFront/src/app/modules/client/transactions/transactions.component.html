@@ -1,4 +1,12 @@
-<p>transactions works!</p>
-<mat-accordion>
-  <app-transaction *ngFor="let transaction of transactions?.items" [transaction]="transaction"></app-transaction>
-</mat-accordion>
+<div *ngIf="transactions">
+  <mat-accordion *ngIf="transactions.items && transactions.items.length > 0">
+    <app-transaction *ngFor="let transaction of transactions.items" [transaction]="transaction"></app-transaction>
+  </mat-accordion>
+
+  <div *ngIf="!transactions.items || transactions.items.length === 0" class="msg">
+    <p>You have no transactions yet.</p>
+  </div>
+</div>
+<div *ngIf="!transactions" class="msg">
+  <p>404</p>
+</div>

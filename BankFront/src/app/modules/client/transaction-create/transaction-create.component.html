@@ -23,6 +23,7 @@
                oninput="this.value = Math.abs(this.value)">
         <span matTextPrefix>$</span>
         <span matTextSuffix>.00</span>
+        <mat-error *ngIf="transactionForm.controls['amount'].hasError('noValue')">You must enter amount</mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Description</mat-label>

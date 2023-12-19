@@ -64,8 +64,8 @@ export class TransactionCreateComponent extends BaseComponent implements OnInit{
 
   private initializeForm() {
     this.transactionForm = this.fb.group({
-      //amount: [null, [Validators.required, Validators.min(0), Validators.max(<number>this.userBalance?.balance)]],
-      amount: [null, [Validators.required, Validators.min(0)]],
+      //amount: [null, [Validators.required, Validators.min(1), Validators.max(<number>this.userBalance?.balance)]],
+      amount: [null, [Validators.required, Validators.min(1)]],
       description: ['']
     })
   }
@@ -112,6 +112,10 @@ export class TransactionCreateComponent extends BaseComponent implements OnInit{
   }
 
   public openDialog() {
+    if (!this.selectedUserId) {
+      this.selectedTab.setValue(0);
+      return;
+    }
     if (this.transactionForm.valid) {
       const dialogRef = this.dialog.open(ConfirmDialogComponent);
 
@@ -121,6 +125,8 @@ export class TransactionCreateComponent extends BaseComponent implements OnInit{
           this.createTransaction();
         }
       });
+    } else {
+      this.transactionForm.controls['amount'].setErrors({'noValue': true});
     }
   }
 

@@ -1,4 +1,12 @@
-<p>loans works!</p>
-<mat-accordion>
-  <app-loan *ngFor="let loan of loans?.items" [loan]="loan"></app-loan>
-</mat-accordion>
+<div *ngIf="loans">
+  <mat-accordion *ngIf="loans.items && loans.items.length > 0">
+    <app-loan *ngFor="let loan of loans.items" [loan]="loan"></app-loan>
+  </mat-accordion>
+
+  <div *ngIf="!loans.items || loans.items.length === 0" class="msg">
+    <p>You have no loans yet.</p>
+  </div>
+</div>
+<div *ngIf="!loans" class="msg">
+  <p>404</p>
+</div>

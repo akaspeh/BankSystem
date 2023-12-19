@@ -5,7 +5,7 @@ import {UserDto} from "../../../models/user/user-dto";
 import {ClientService} from "../../../core/services/client.service";
 import {AuthService} from "../../../core/services/auth.service";
 import {TransactionComponent} from "../../../shared/components/transaction/transaction.component";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {BaseComponent} from "../../../core/base/base.component";
 import {takeUntil} from "rxjs";
 
@@ -15,7 +15,8 @@ import {takeUntil} from "rxjs";
   imports: [
     MatExpansionModule,
     TransactionComponent,
-    NgForOf
+    NgForOf,
+    NgIf
   ],
   templateUrl: './transactions.component.html',
   styleUrl: './transactions.component.css'

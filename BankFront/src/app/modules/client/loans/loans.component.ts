@@ -7,16 +7,17 @@ import {LoanListDto} from "../../../models/loan/loan-list-dto";
 import {takeUntil} from "rxjs";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {LoanComponent} from "../../../shared/components/loan/loan.component";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-loans',
   standalone: true,
-  imports: [
-    MatExpansionModule,
-    LoanComponent,
-    NgForOf
-  ],
+    imports: [
+        MatExpansionModule,
+        LoanComponent,
+        NgForOf,
+        NgIf
+    ],
   templateUrl: './loans.component.html',
   styleUrl: './loans.component.css'
 })
