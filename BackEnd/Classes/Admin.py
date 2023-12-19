@@ -42,7 +42,7 @@ class Admin:
                 }
                 return jsonify(result_dict)
 
-    def findAllLoan(self,userId):
+    def findAllLoan(self, userId):
         with self.__dbsystem.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
             try:
                 cursor.execute(f"SELECT * FROM LOANS WHERE user_id = {userId}")
@@ -51,7 +51,10 @@ class Admin:
                 loans_data = cursor.fetchall()
 
                 # Формирование объектов LoanDto из результатов
-                items = [LoanDto(*loan) for loan in loans_data]
+
+                items = [
+                    LoanDto(id = loan['user_id'], amount=loan['amount'], interestRate=loan['interest_rate'], openingDate=loan['date_open'].strftime("%d-%m-%Y"),
+                            closingDate=loan['date_close'].strftime("%d-%m-%Y")).to_dict() for loan in loans_data]
 
                 # Создание объекта LoanListDto
                 result_dict = {

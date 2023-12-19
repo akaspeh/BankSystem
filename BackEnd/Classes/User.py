@@ -58,6 +58,31 @@ class User:
         else:
             return jsonify({'status': 'wrong email'})
 
+    def getBalance(self,userId):
+        with self.__dbsystem.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
+            try:
+                cursor.execute(f"SELECT balance FROM USERS WHERE id = {userId}")
+
+                # Получение результатов
+                balance = cursor.fetchall()
+                print(balance[0][0])
+                # Формирование объектов LoanDto из результатов
+
+                # Создание объекта LoanListDto
+                result_dict = {
+                    'userId': userId,
+                    'balance': balance[0][0]
+                }
+                print(jsonify(result_dict))
+                return jsonify(result_dict)
+
+            except Exception as e:
+                logging.error(e)
+                items = []
+
+
+
+
 
 
 

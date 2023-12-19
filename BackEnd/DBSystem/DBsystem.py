@@ -24,6 +24,7 @@ class DBsystem:
                     f"email text, "
                     f"phone text,"
                     f"address text, "
+                    f"balance FLOAT DEFAULT 0,"
                     f"role text)")
 
                 cursor.execute(
@@ -32,12 +33,6 @@ class DBsystem:
                     f"date_close TIMESTAMP,"
                     f"amount FLOAT,"
                     f"interest_rate FLOAT,"
-                    f"user_id bigint REFERENCES USERS(id))")
-
-                cursor.execute(
-                    f"CREATE TABLE IF NOT EXISTS CARDS ("
-                    f"card SERIAL PRIMARY KEY, "
-                    f"balance FLOAT,"
                     f"user_id bigint REFERENCES USERS(id))")
 
                 cursor.execute(

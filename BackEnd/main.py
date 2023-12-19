@@ -20,6 +20,7 @@ class Application:
         self.app.route('/api/client/transaction/create', methods=['POST'])(self.BANK.createTransaction)
         self.app.route('/api/client/loan/create', methods=['POST'])(self.BANK.createLoan)
         self.app.route('/api/client/find/<string:search>', methods=['GET'])(self.BANK.admin.clientSearch) #GET, а не POST
+        self.app.route('/api/client/balance/<int:userId>', methods=['GET'])(self.BANK.user.getBalance)
 
     def run(self):
         self.dbsystem.create_tables()

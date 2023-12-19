@@ -4,6 +4,7 @@ import psycopg2
 import psycopg2.extras
 import logging
 from datetime import date
+from datetime import datetime
 from flask_cors import CORS
 
 class BANK:
@@ -16,10 +17,10 @@ class BANK:
         with self.dbsystem.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
             try:
                 today = date.today().strftime("%Y-%m-%d")
-                cursor.execute(f"UPDATE CARDS SET balance = balance - {data['amount']} WHERE card = {data['cardholder']} ")
-                cursor.execute(f"UPDATE CARDS SET balance = balance + {data['amount']} WHERE card = {data['cardreceiver']} ")
+                cursor.execute(f"UPDATE USERS SET balance = balance - {data['amount']} WHERE id = {data['userIdSender']} ")
+                cursor.execute(f"UPDATE USERS SET balance = balance + {data['amount']} WHERE id = {data['userIdReceiver']} ")
                 cursor.execute(f"INSERT INTO TRANSACTIONS (data, amount, description, user_id_sender, user_id_reciver)"
-                f"VALUES ('{today}', {data['amount']}, '{data['description']}', {data['cardholder']}, {data['cardreceiver']})")
+                f"VALUES ('{today}', {data['amount']}, '{data['description']}', {data['userIdSender']}, {data['userIdReceiver']})")
                 response = make_response('', 204)
                 return response
             except Exception as e:
@@ -33,12 +34,16 @@ class BANK:
     #
     def createLoan(self):
         data = request.get_json()
+        print(data)
         with self.dbsystem.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
             try:
-                cursor.execute(f"INSERT INTO LOANS (amount,data,interest_rate,user_id)"
-                f"VALUES ({data['amount']},{data['data']},{data['interest_rate']},{data['user_id']})")
+                cursor.execute(f"INSERT INTO LOANS (amount, date_open, date_close, interest_rate, user_id)"
+                f"VALUES ({data['amount']}, '{date.today()}', '{datetime.strptime(data['closingDate'], '%d-%m-%Y')}',"
+                               f"{data['interestRate']}, {data['userId']})")
+                cursor.execute(f"UPDATE USERS SET balance = balance+{data['amount']} WHERE id = {data['userId']}")
                 response = make_response('', 201)
                 return response
+
             except Exception as e:
                 logging.error(e)
                 abort(403)
