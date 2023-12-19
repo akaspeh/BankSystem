@@ -12,7 +12,10 @@ class DBsystem:
         self.redis = Redis(host=ConfigRedis.host, port=ConfigRedis.port, db=ConfigRedis.db)
         self.postgres = PostGres(host=ConfigPostgres.host, db=ConfigPostgres.db,
                             username=ConfigPostgres.user, password=ConfigPostgres.password)
-        self.mongo = Mongo(host=ConfigMongo.host, port=ConfigMongo.port)
+        #self.mongo1 = Mongo(host=ConfigMongo.host, port=ConfigMongo.port)
+        self.mongo1 = MongoClient('localhost', 27017)
+
+
 
     def create_tables(self):
         with self.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
@@ -50,6 +53,9 @@ class DBsystem:
                     f"user_id_reciver bigint REFERENCES USERS(id))")
             except Exception as e:
                 logging.error(e)
+        mongo_test = self.mongo1['SystemEventsTracing']
+
+
     def redis_get_element(self, key):
         value = self.redis.redis_client.get(key)
 

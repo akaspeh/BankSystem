@@ -2,6 +2,7 @@ from flask import jsonify, request, make_response, abort
 from BackEnd.utils import UserSignInInfo
 import psycopg2
 import logging
+from datetime import date
 class User:
     def __init__(self, dbsystem):
         self.__isAdmin = False
@@ -52,6 +53,16 @@ class User:
 
                     cursor.execute(f"INSERT INTO CARDS(balance, user_id)"
                                    f"VALUES (0, {variable[0]['id']})")
+
+                    today = date.today().strftime("%Y-%m-%d")
+
+                    acess_mongo_doc = self.__dbsystem.mongo1['SystemEventsTracing']
+                    collection = acess_mongo_doc['AuditCollection']
+
+                    document = {'action': 'Sign In', 'user_name': variable[0]['name'] , 'user_id':variable[0]['id'] ,'date': today}
+                    result = collection.insert_one(document)
+                    print(f'Inserted document id: {result.inserted_id}')
+
                 except Exception as e:
                     logging.error(e)
             return jsonify({'status': 'succeed'})
