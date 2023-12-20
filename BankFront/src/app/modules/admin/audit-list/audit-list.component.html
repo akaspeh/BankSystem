@@ -1,0 +1,9 @@
+<div *ngIf="auditList">
+  <app-audit-action *ngFor="let audit of auditList" [auditAction]="audit"></app-audit-action>
+  <div *ngIf="!auditList || auditList.length === 0" class="msg">
+    <p>You have no transactions yet.</p>
+  </div>
+</div>
+<div *ngIf="!auditList" class="msg">
+  <p>404</p>
+</div>

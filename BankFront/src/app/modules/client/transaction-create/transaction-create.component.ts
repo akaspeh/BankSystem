@@ -94,7 +94,6 @@ export class TransactionCreateComponent extends BaseComponent implements OnInit{
   public selectUser(user: UserDto): void {
     this.selectedUserId = user.id;
     this.selectedTab.setValue(1);
-    console.log(this.selectedUserId);
   }
 
   public search(event: any) {

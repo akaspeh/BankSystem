@@ -1,0 +1,48 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #DAD2D8;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  border-bottom: 1px solid #0D0106;
+}
+
+.menu {
+  padding-right: 18%;
+}
+
+.menu button {
+  margin: 0 4px;
+}
+
+.admin-info {
+  padding-left: 18%;
+  padding-top: 50px;
+  padding-right: 20%;
+  height: 200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-column h1 {
+  font-size: 40px;
+}
+
+.left-column h2 {
+  font-size: 18px;
+  color: darkgrey;
+}
+
+.right-column {
+  display: flex;
+  justify-content: center;
+}
+
+.right-column p {
+  font-size: 50px;
+}
