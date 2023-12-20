@@ -22,6 +22,13 @@ class BANK:
                 cursor.execute(f"INSERT INTO TRANSACTIONS (data, amount, description, user_id_sender, user_id_reciver)"
                 f"VALUES ('{today}', {data['amount']}, '{data['description']}', {data['userIdSender']}, {data['userIdReceiver']})")
                 response = make_response('', 204)
+
+                cursor.execute(f"SELECT * FROM USERS WHERE id = {data['userIdSender']}")
+                variable = cursor.fetchall()
+
+                self.dbsystem.audit_insert_info(user_name=variable[0]['name'], user_id=variable[0]['id'],
+                                                  operation='Made a Transaction')
+
                 return response
             except Exception as e:
                 logging.error(e)
@@ -37,6 +44,12 @@ class BANK:
                                f"{data['interestRate']}, {data['userId']})")
                 cursor.execute(f"UPDATE USERS SET balance = balance+{data['amount']} WHERE id = {data['userId']}")
                 response = make_response('', 201)
+
+                cursor.execute(f"SELECT * FROM USERS WHERE id = {data['userId']}")
+                variable = cursor.fetchall()
+
+                self.dbsystem.audit_insert_info(user_name=variable[0]['name'], user_id=variable[0]['id'],
+                                                operation='Applied for a Loan')
                 return response
 
             except Exception as e:

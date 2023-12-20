@@ -5,7 +5,7 @@ from BackEnd.DBSystem.DBs.Mongo import *
 from BackEnd.Config import *
 import logging
 import redis
-from datetime import date
+from datetime import *
 
 class DBsystem:
     def __init__(self):
@@ -59,11 +59,11 @@ class DBsystem:
 
 
     def audit_insert_info(self, operation, user_name, user_id):
-        today = date.today().strftime("%Y-%m-%d")
+        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         acess_mongo_doc = self.mongo1['SystemEventsTracing']
         collection = acess_mongo_doc['AuditCollection']
 
-        document = {'action': operation, 'user_name': user_name, 'user_id': user_id, 'date': today}
+        document = {'action': operation, 'user_name': user_name, 'user_id': user_id, 'date': now}
         result = collection.insert_one(document)
         print(f'Inserted document id: {result.inserted_id}')

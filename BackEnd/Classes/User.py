@@ -51,7 +51,7 @@ class User:
 
                     variable = cursor.fetchall()
 
-                    self.__dbsystem.audit_insert_info(user_name=variable[0]['name'],user_id=variable[0]['id'], operation='Sign In')
+                    self.__dbsystem.audit_insert_info(user_name=variable[0]['name'],user_id=variable[0]['id'], operation='Signed In')
 
                 except Exception as e:
                     logging.error(e)
