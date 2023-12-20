@@ -68,3 +68,22 @@ class DBsystem:
         document = {'action': operation, 'user_name': user_name, 'user_id': user_id, 'date': now}
         result = collection.insert_one(document)
         print(f'Inserted document id: {result.inserted_id}')
+
+    def get_data_mongo(self, action):
+
+        if action == 'signin':
+            action = "Signed In"
+        elif action == 'transaction':
+            action = "Made a Transaction"
+        elif action == 'loan':
+            action = "Applied for a Loan"
+        else:
+            action = {}
+
+        acess_mongo_doc = self.mongo1['SystemEventsTracing']
+        collection = acess_mongo_doc['AuditCollection']
+
+        filter_criteria = {"action": action}
+
+        documents = collection.find(filter_criteria, {"_id": 0})
+        return documents
