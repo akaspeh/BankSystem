@@ -44,7 +44,7 @@ class User:
             with self.__dbsystem.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
                 try:
                     cursor.execute(f"INSERT INTO USERS(name, email, phone, address, role) "
-                                   f"VALUES('{data['firstName']}', '{data['email']}',"
+                                   f"VALUES('{data['firstName'] + ' ' + data['lastName']}', '{data['email']}',"
                                    f"'{data['phone']}', '{data['address']}', 'client') ")
 
                     cursor.execute(f"SELECT * FROM USERS WHERE email = '{data['email']}'")

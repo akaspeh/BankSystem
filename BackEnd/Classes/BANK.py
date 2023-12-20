@@ -26,12 +26,7 @@ class BANK:
             except Exception as e:
                 logging.error(e)
                 abort(403)
-    # def transactionUserToUser(self):
-    #
-    # def withdraw(self,card):
-    #
-    # def topUp(self,card):
-    #
+
     def createLoan(self):
         data = request.get_json()
         print(data)
