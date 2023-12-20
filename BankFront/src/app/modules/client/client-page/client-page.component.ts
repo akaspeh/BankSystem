@@ -5,10 +5,10 @@ import {AuthService} from "../../../core/services/auth.service";
 import {UserDto} from "../../../models/user/user-dto";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTabsModule} from "@angular/material/tabs";
-import {Router, RouterLink, RouterOutlet} from "@angular/router";
+import {NavigationEnd, Router, RouterLink, RouterOutlet} from "@angular/router";
 import {MatButtonModule} from "@angular/material/button";
 import {UserBalanceDto} from "../../../models/user/user-balance-dto";
-import {takeUntil} from "rxjs";
+import {filter, takeUntil} from "rxjs";
 import {BaseComponent} from "../../../core/base/base.component";
 
 @Component({
@@ -36,6 +36,12 @@ export class ClientPageComponent extends BaseComponent implements OnInit{
 
   constructor(private clientService: ClientService, private authService: AuthService, private router: Router) {
     super()
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      // Викликайте метод getUserBalance при кожному успішному переході
+      this.getUserBalance();
+    });
   }
 
   public logout() {

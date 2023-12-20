@@ -73,8 +73,8 @@ export class TransactionCreateComponent extends BaseComponent implements OnInit{
   private createTransaction() {
     if (this.transactionForm.valid && this.currentUser && this.selectedUserId) {
       const transaction: TransactionCreationDto = this.transactionForm.value;
-      transaction.cardholder = this.currentUser.id;
-      transaction.cardreceiver = this.selectedUserId;
+      transaction.userIdSender = this.currentUser.id;
+      transaction.userIdReceiver = this.selectedUserId;
       console.log('create transaction')
       this.clientService.createTransaction(transaction).
       subscribe({

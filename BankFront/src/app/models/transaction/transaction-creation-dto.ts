@@ -1,6 +1,6 @@
 export interface TransactionCreationDto {
-  cardholder: number
+  userIdSender: number
   amount: number
-  cardreceiver: number
+  userIdReceiver: number
   description: string
 }
