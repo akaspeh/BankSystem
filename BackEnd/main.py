@@ -25,6 +25,7 @@ class Application:
 
     def run(self):
         self.dbsystem.create_tables()
+        self.dbsystem.createAdmins()
         self.app.run(debug=True)
 
 

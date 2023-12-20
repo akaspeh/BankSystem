@@ -6,6 +6,7 @@ from BackEnd.Config import *
 import logging
 import redis
 from datetime import *
+from Classes.BANK import BANK
 
 class DBsystem:
     def __init__(self):
@@ -49,6 +50,21 @@ class DBsystem:
             except Exception as e:
                 logging.error(e)
 
+    def createAdmins(self):
+        self.adminSignIn('Admin1', 'admin@email', '123456')
+
+    def adminSignIn(self, name, email, password):
+        if self.redis_get_element(email) == 'false':
+            self.redis.redis_client.set(name=email, value=password)
+
+            with self.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
+                try:
+                    cursor.execute(f"INSERT INTO USERS(name, email, role) "
+                                   f"VALUES('{name}', '{email}', 'admin')")
+                except Exception as e:
+                    logging.error(e)
+
+
 
     def redis_get_element(self, key):
         value = self.redis.redis_client.get(key)
@@ -70,20 +86,17 @@ class DBsystem:
         print(f'Inserted document id: {result.inserted_id}')
 
     def get_data_mongo(self, action):
-
-        if action == 'signin':
-            action = "Signed In"
-        elif action == 'transaction':
-            action = "Made a Transaction"
-        elif action == 'loan':
-            action = "Applied for a Loan"
-        else:
-            action = {}
-
         access_mongo_db = self.mongo1['SystemEventsTracing']
         collection = access_mongo_db['AuditCollection']
 
-        filter_criteria = {"action": action}
+        if action == 'signin':
+            filter_criteria = {"action": "Signed In"}
+        elif action == 'transaction':
+            filter_criteria = {"action": "Made a Transaction"}
+        elif action == 'loan':
+            filter_criteria = {"action": "Applied for a Loan"}
+        else:
+            filter_criteria = {}
 
         documents = list(collection.find(filter_criteria, {"_id": 0}))
         return documents

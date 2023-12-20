@@ -39,9 +39,9 @@ export class AdminPageComponent extends BaseComponent implements OnInit {
         }
       }
     });
-    // if (!this.currentUser) {
-    //   this.router.navigate(['/home']);
-    // }
+    if (!this.currentUser) {
+      this.router.navigate(['/home']);
+    }
   }
 
 }
