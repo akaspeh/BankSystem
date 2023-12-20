@@ -1,6 +1,6 @@
 <div *ngIf="loans">
   <mat-accordion *ngIf="loans.items && loans.items.length > 0">
-    <app-loan *ngFor="let loan of loans.items" [loan]="loan"></app-loan>
+    <app-loan *ngFor="let loan of reversedLoans()" [loan]="loan"></app-loan>
   </mat-accordion>
 
   <div *ngIf="!loans.items || loans.items.length === 0" class="msg">

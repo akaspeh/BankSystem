@@ -1,6 +1,6 @@
 <div *ngIf="transactions">
   <mat-accordion *ngIf="transactions.items && transactions.items.length > 0">
-    <app-transaction *ngFor="let transaction of transactions.items" [transaction]="transaction"></app-transaction>
+    <app-transaction *ngFor="let transaction of reversedTransactions()" [transaction]="transaction"></app-transaction>
   </mat-accordion>
 
   <div *ngIf="!transactions.items || transactions.items.length === 0" class="msg">

@@ -8,6 +8,7 @@ import {TransactionComponent} from "../../../shared/components/transaction/trans
 import {NgForOf, NgIf} from "@angular/common";
 import {BaseComponent} from "../../../core/base/base.component";
 import {takeUntil} from "rxjs";
+import {TransactionDto} from "../../../models/transaction/transaction-dto";
 
 @Component({
   selector: 'app-transactions',
@@ -32,6 +33,10 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
 
   constructor(private clientService: ClientService, private authService: AuthService) {
     super();
+  }
+
+  public reversedTransactions(): TransactionDto[] {
+    return this.transactions?.items ? this.transactions.items.slice().reverse() : [];
   }
 
   private getTransactions() {

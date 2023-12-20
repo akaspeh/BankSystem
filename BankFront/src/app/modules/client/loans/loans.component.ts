@@ -8,6 +8,7 @@ import {takeUntil} from "rxjs";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {LoanComponent} from "../../../shared/components/loan/loan.component";
 import {NgForOf, NgIf} from "@angular/common";
+import {LoanDto} from "../../../models/loan/loan-dto";
 
 @Component({
   selector: 'app-loans',
@@ -32,6 +33,10 @@ export class LoansComponent extends BaseComponent implements OnInit {
 
   constructor(private clientService: ClientService, private authService: AuthService) {
     super();
+  }
+
+  public reversedLoans(): LoanDto[] {
+    return this.loans?.items ? this.loans.items.slice().reverse() : [];
   }
 
   private getLoans() {
