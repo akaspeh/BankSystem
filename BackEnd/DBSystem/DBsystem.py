@@ -1,4 +1,4 @@
-
+from flask import jsonify
 from BackEnd.DBSystem.DBs.Redis import *
 from BackEnd.DBSystem.DBs.PostGres import *
 from BackEnd.DBSystem.DBs.Mongo import *
@@ -80,10 +80,10 @@ class DBsystem:
         else:
             action = {}
 
-        acess_mongo_doc = self.mongo1['SystemEventsTracing']
-        collection = acess_mongo_doc['AuditCollection']
+        access_mongo_db = self.mongo1['SystemEventsTracing']
+        collection = access_mongo_db['AuditCollection']
 
         filter_criteria = {"action": action}
 
-        documents = collection.find(filter_criteria, {"_id": 0})
+        documents = list(collection.find(filter_criteria, {"_id": 0}))
         return documents

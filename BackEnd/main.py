@@ -21,6 +21,7 @@ class Application:
         self.app.route('/api/client/loan/create', methods=['POST'])(self.BANK.createLoan)
         self.app.route('/api/client/find/<string:search>', methods=['GET'])(self.BANK.admin.clientSearch) #GET, а не POST
         self.app.route('/api/client/balance/<int:userId>', methods=['GET'])(self.BANK.user.getBalance)
+        self.app.route('/api/admin/audit/<string:action>', methods=['GET'])(self.dbsystem.get_data_mongo)
 
     def run(self):
         self.dbsystem.create_tables()
