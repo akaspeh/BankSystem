@@ -64,8 +64,8 @@ export class TransactionCreateComponent extends BaseComponent implements OnInit{
 
   private initializeForm() {
     this.transactionForm = this.fb.group({
-      //amount: [null, [Validators.required, Validators.min(1), Validators.max(<number>this.userBalance?.balance)]],
-      amount: [null, [Validators.required, Validators.min(1)]],
+      amount: [null, [Validators.required, Validators.min(1), Validators.max(<number>this.userBalance?.balance)]],
+      //amount: [null, [Validators.required, Validators.min(1)]],
       description: ['']
     })
   }
@@ -147,6 +147,12 @@ export class TransactionCreateComponent extends BaseComponent implements OnInit{
         .subscribe({
           next: balance => {
             this.userBalance = balance;
+            // Оновлення значення максимального балансу у формі
+            const amountControl = this.transactionForm.get('amount');
+            if (amountControl) {
+              amountControl.setValidators([Validators.required, Validators.min(1), Validators.max(this.userBalance?.balance)]);
+              amountControl.updateValueAndValidity();
+            }
           }
         })
     }
