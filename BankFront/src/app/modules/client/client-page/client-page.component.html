@@ -1,13 +1,17 @@
 <header>
-  <button mat-button color="primary" routerLink="/client">Home</button>
-  <button mat-button color="primary" routerLink="/client/create-transaction">Make transaction</button>
-  <button mat-button color="primary" routerLink="/client/create-loan">Apply for a loan</button>
-  <button mat-button color="warn" (click)="logout()">LogOut</button>
+  <div class="menu">
+    <button mat-button color="primary" routerLink="/client">Home</button>
+    <button mat-button color="primary" routerLink="/client/create-transaction">Make transaction</button>
+    <button mat-button color="primary" routerLink="/client/create-loan">Apply for a loan</button>
+    <button mat-button color="warn" (click)="logout()">LogOut</button>
+  </div>
 </header>
 <div class="client-info">
   <div class="left-column">
     <h1>{{currentUser?.userName}}</h1>
     <h2>{{currentUser?.email}}</h2>
+  </div>
+  <div class="right-column">
     <p>{{userBalance?.balance}}</p>
   </div>
 </div>
