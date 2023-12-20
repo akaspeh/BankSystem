@@ -31,6 +31,7 @@ class DBsystem:
 
                 cursor.execute(
                     f"CREATE TABLE IF NOT EXISTS LOANS ("
+                    f"id SERIAL PRIMARY KEY, "
                     f"date_open TIMESTAMP,"
                     f"date_close TIMESTAMP,"
                     f"amount FLOAT,"
