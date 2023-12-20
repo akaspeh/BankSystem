@@ -56,7 +56,10 @@ export class ClientPageComponent extends BaseComponent implements OnInit{
           this.currentUser = user;
         }
       }
-    })
+    });
+    if (!this.currentUser) {
+      this.router.navigate(['/home']);
+    }
   }
   private getUserBalance() {
     if (this.currentUser) {

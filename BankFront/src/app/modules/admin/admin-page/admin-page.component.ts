@@ -38,7 +38,10 @@ export class AdminPageComponent extends BaseComponent implements OnInit {
           this.currentUser = user;
         }
       }
-    })
+    });
+    // if (!this.currentUser) {
+    //   this.router.navigate(['/home']);
+    // }
   }
 
 }

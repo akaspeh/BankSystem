@@ -37,12 +37,3 @@ header {
   font-size: 18px;
   color: darkgrey;
 }
-
-.right-column {
-  display: flex;
-  justify-content: center;
-}
-
-.right-column p {
-  font-size: 50px;
-}

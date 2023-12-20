@@ -1,4 +1,14 @@
+.form {
+  padding-left: 18%;
+}
+.container {
+  padding-left: 18%;
+  padding-right: 18%;
+}
 .msg {
   display: flex;
   justify-content: center;
+}
+.audit-table {
+  width: 100%;
 }

@@ -3,11 +3,12 @@
                      *ngIf="loan">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      {{loan.amount}}
+      {{loan.closingDate}}
     </mat-panel-title>
     <mat-panel-description>
-      {{loan.closingDate}}
+      ${{loan.amount}}
     </mat-panel-description>
   </mat-expansion-panel-header>
-  <p>{{loan.openingDate}}</p>
+  <p>Opening date: {{loan.openingDate}}</p>
+  <p>Interest rate: {{loan.interestRate}}</p>
 </mat-expansion-panel>

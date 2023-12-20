@@ -7,7 +7,7 @@ import {AuthService} from "../../../core/services/auth.service";
 import {TransactionComponent} from "../../../shared/components/transaction/transaction.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {BaseComponent} from "../../../core/base/base.component";
-import {takeUntil} from "rxjs";
+import {map, takeUntil} from "rxjs";
 import {TransactionDto} from "../../../models/transaction/transaction-dto";
 
 @Component({
@@ -42,7 +42,17 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
   private getTransactions() {
     if (this.currentUser) {
       this.clientService.getAllTransactions(this.currentUser.id)
-        .pipe(takeUntil(this.unsubscribe$))
+        .pipe(takeUntil(this.unsubscribe$),
+          map(transactions => {
+            transactions.items.forEach(transaction => {
+              // Перевірка, чи currentUser.id рівне senderId
+              if (transaction.sender === this.currentUser?.id) {
+                // Якщо так, то зробити поле amount від'ємним
+                transaction.amount = -1 * transaction.amount;
+              }
+            });
+            return transactions;
+          }))
         .subscribe({
           next: transactions => {
             this.transactions = transactions;
