@@ -10,9 +10,9 @@ class ConfigPostgres:
 
 class ConfigMongo():
     host = 'localhost'
-    db = "mongo"
-    user = "mymongoadmin"
-    password = "mymongopassword"
+    db = 'mongo'
+    user = 'mymongoadmin'
+    password = 'mymongopassword'
     port = 27017
 
 class ConfigRedis():

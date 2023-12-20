@@ -5,15 +5,14 @@ from BackEnd.DBSystem.DBs.Mongo import *
 from BackEnd.Config import *
 import logging
 import redis
-
+from datetime import date
 
 class DBsystem:
     def __init__(self):
         self.redis = Redis(host=ConfigRedis.host, port=ConfigRedis.port, db=ConfigRedis.db)
         self.postgres = PostGres(host=ConfigPostgres.host, db=ConfigPostgres.db,
                             username=ConfigPostgres.user, password=ConfigPostgres.password)
-        #self.mongo1 = Mongo(host=ConfigMongo.host, port=ConfigMongo.port)
-        self.mongo1 = MongoClient('localhost', 27017)
+        self.mongo1 = MongoClient('mongodb://mymongoadmin:mymongopassword@127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.1.0')
 
 
 
@@ -48,7 +47,6 @@ class DBsystem:
                     f"user_id_reciver bigint REFERENCES USERS(id))")
             except Exception as e:
                 logging.error(e)
-        mongo_test = self.mongo1['SystemEventsTracing']
 
 
     def redis_get_element(self, key):
@@ -60,4 +58,12 @@ class DBsystem:
             return value
 
 
+    def audit_insert_info(self, operation, user_name, user_id):
+        today = date.today().strftime("%Y-%m-%d")
 
+        acess_mongo_doc = self.mongo1['SystemEventsTracing']
+        collection = acess_mongo_doc['AuditCollection']
+
+        document = {'action': operation, 'user_name': user_name, 'user_id': user_id, 'date': today}
+        result = collection.insert_one(document)
+        print(f'Inserted document id: {result.inserted_id}')
