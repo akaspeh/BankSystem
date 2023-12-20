@@ -51,9 +51,6 @@ class User:
 
                     variable = cursor.fetchall()
 
-                    cursor.execute(f"INSERT INTO CARDS(balance, user_id)"
-                                   f"VALUES (0, {variable[0]['id']})")
-
                     self.__dbsystem.audit_insert_info(user_name=variable[0]['name'],user_id=variable[0]['id'], operation='Sign In')
 
                 except Exception as e:
@@ -69,7 +66,6 @@ class User:
 
                 # Получение результатов
                 balance = cursor.fetchall()
-                print(balance[0][0])
                 # Формирование объектов LoanDto из результатов
 
                 # Создание объекта LoanListDto
@@ -77,7 +73,6 @@ class User:
                     'userId': userId,
                     'balance': balance[0][0]
                 }
-                print(jsonify(result_dict))
                 return jsonify(result_dict)
 
             except Exception as e:
