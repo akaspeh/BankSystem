@@ -106,6 +106,7 @@ export class TransactionCreateComponent extends BaseComponent implements OnInit{
           next: userList => {
             this.users = userList;
             this.users.items = this.users.items.filter(user => user.id !== this.currentUser?.id);
+            this.users.items = this.users.items.filter(user => user.role !== 'admin');
           }
         });
     }
