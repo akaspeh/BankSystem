@@ -6,7 +6,7 @@ from BackEnd.Config import *
 import logging
 import redis
 from datetime import *
-from Classes.BANK import BANK
+from BackEnd.Classes.BANK import BANK
 
 class DBsystem:
     def __init__(self):

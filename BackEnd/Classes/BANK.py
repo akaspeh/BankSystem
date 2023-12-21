@@ -36,7 +36,6 @@ class BANK:
 
     def createLoan(self):
         data = request.get_json()
-        print(data)
         with self.dbsystem.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
             try:
                 cursor.execute(f"INSERT INTO LOANS (amount, date_open, date_close, interest_rate, user_id)"
