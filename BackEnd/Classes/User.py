@@ -1,7 +1,7 @@
 from flask import jsonify, request, make_response, abort
-from BackEnd.utils import UserSignInInfo
 import psycopg2
 import logging
+from BackEnd.utils.SecurityUtils import Security
 
 class User:
     def __init__(self, dbsystem):
@@ -9,15 +9,25 @@ class User:
         self.__dbsystem = dbsystem
     def login(self):
         data = request.get_json()
+        security = Security()
 
-        if self.__dbsystem.redis_get_element(data['email']) == 'false':
+        security.hash.update(data['email'][0:5].encode('utf-8'))
+        emailSaltHashed = security.hash.hexdigest()
+        print(data['email'][0:5])
+        print(emailSaltHashed)
+
+
+
+        if self.__dbsystem.redis_get_element(emailSaltHashed) == 'false':
             result_dict = {
                  'userDto': {'id': '', 'userName': '', 'email': '', 'role': ''},
                 'status': 'failed'}
             return jsonify(result_dict)
         else:
-            temporary = self.__dbsystem.redis_get_element(data['email'])
-            if  temporary.decode() == data['password']:
+            security.hash.update(data['password'].encode('utf-8'))
+            passwordHashed = security.hash.hexdigest()
+            temporary = self.__dbsystem.redis_get_element(emailSaltHashed)
+            if  temporary.decode() == passwordHashed:
                 with self.__dbsystem.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
                     try:
                         cursor.execute(f"SELECT * FROM USERS WHERE email = '{data['email']}'")
@@ -37,9 +47,20 @@ class User:
                 return jsonify(result_dict)
     def sign_in(self):
         data = request.get_json()
+        security = Security()
 
         if self.__dbsystem.redis_get_element(data['email']) == 'false':
-            self.__dbsystem.redis.redis_client.set(name=data['email'], value=data['password'])
+
+            security.hash.update(data['email'][0:5].encode('utf-8'))
+            emailSaltHashed = security.hash.hexdigest()
+            print(data['email'][0:5])
+            print(emailSaltHashed)
+
+
+            security.hash.update(data['password'].encode('utf-8'))
+            passwordHashed = security.hash.hexdigest()
+
+            self.__dbsystem.redis.redis_client.set(name=emailSaltHashed, value= passwordHashed)
 
             with self.__dbsystem.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
                 try:
@@ -51,7 +72,7 @@ class User:
 
                     variable = cursor.fetchall()
 
-                    self.__dbsystem.audit_insert_info(user_name=variable[0]['name'],user_id=variable[0]['id'], operation='Signed In')
+                    self.__dbsystem.audit_insert_info(user_name=variable[0]['name'], user_id=variable[0]['id'], operation='Signed In')
                 except Exception as e:
                     logging.error(e)
             return jsonify({'status': 'succeed'})
