@@ -84,13 +84,10 @@ class Admin:
 
                 cursor.execute(query, ('%' + search + '%',))
 
-                # Получение результатов
                 user_data = cursor.fetchall()
 
-                # Формирование объектов ClientListDto из результатов
                 items = [UserDto(user['id'], user['name'], user['email'], user['role']).to_dict() for user in user_data]
 
-                # Создание объекта TransactionListDto
                 result_dict = {
                     'items': items,
                     'totalCount': len(items)

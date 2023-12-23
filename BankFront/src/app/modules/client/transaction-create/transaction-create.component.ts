@@ -147,7 +147,6 @@ export class TransactionCreateComponent extends BaseComponent implements OnInit{
         .subscribe({
           next: balance => {
             this.userBalance = balance;
-            // Оновлення значення максимального балансу у формі
             const amountControl = this.transactionForm.get('amount');
             if (amountControl) {
               amountControl.setValidators([Validators.required, Validators.min(1), Validators.max(this.userBalance?.balance)]);

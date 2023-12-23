@@ -45,9 +45,7 @@ export class TransactionsComponent extends BaseComponent implements OnInit {
         .pipe(takeUntil(this.unsubscribe$),
           map(transactions => {
             transactions.items.forEach(transaction => {
-              // Перевірка, чи currentUser.id рівне senderId
               if (transaction.sender === this.currentUser?.id) {
-                // Якщо так, то зробити поле amount від'ємним
                 transaction.amount = -1 * transaction.amount;
               }
             });

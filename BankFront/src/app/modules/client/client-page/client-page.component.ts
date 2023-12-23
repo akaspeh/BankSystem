@@ -39,7 +39,6 @@ export class ClientPageComponent extends BaseComponent implements OnInit{
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
-      // Викликайте метод getUserBalance при кожному успішному переході
       this.getUserBalance();
     });
   }

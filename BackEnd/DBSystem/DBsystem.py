@@ -78,8 +78,8 @@ class DBsystem:
     def audit_insert_info(self, operation, user_name, user_id):
         now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        acess_mongo_doc = self.mongo1['SystemEventsTracing']
-        collection = acess_mongo_doc['AuditCollection']
+        access_mongo_doc = self.mongo1['SystemEventsTracing']
+        collection = access_mongo_doc['AuditCollection']
 
         document = {'action': operation, 'user_name': user_name, 'user_id': user_id, 'date': now}
         result = collection.insert_one(document)

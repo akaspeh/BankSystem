@@ -13,8 +13,6 @@ class User:
 
         security.hash.update(data['email'][0:5].encode('utf-8'))
         emailHashed = security.hash.hexdigest()
-        print(data['email'][0:5])
-        print(emailHashed)
 
 
 
@@ -51,14 +49,12 @@ class User:
         security.hash.update(data['email'][0:5].encode('utf-8'))
         emailHashed = security.hash.hexdigest()
         if self.__dbsystem.redis_get_element(emailHashed) == 'false':
-            print(data['email'][0:5])
-            print(emailHashed)
 
 
             security.hash.update(data['password'].encode('utf-8'))
             passwordHashed = security.hash.hexdigest()
 
-            self.__dbsystem.redis.redis_client.set(name=emailSaltHashed, value= passwordHashed)
+            self.__dbsystem.redis.redis_client.set(name=emailHashed, value= passwordHashed)
 
             with self.__dbsystem.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
                 try:
@@ -82,11 +78,8 @@ class User:
             try:
                 cursor.execute(f"SELECT balance FROM USERS WHERE id = {userId}")
 
-                # Получение результатов
                 balance = cursor.fetchall()
-                # Формирование объектов LoanDto из результатов
 
-                # Создание объекта LoanListDto
                 result_dict = {
                     'userId': userId,
                     'balance': balance[0][0]
@@ -95,7 +88,6 @@ class User:
 
             except Exception as e:
                 logging.error(e)
-                items = []
 
 
 
