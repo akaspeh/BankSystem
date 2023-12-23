@@ -12,13 +12,13 @@ class User:
         security = Security()
 
         security.hash.update(data['email'][0:5].encode('utf-8'))
-        emailSaltHashed = security.hash.hexdigest()
+        emailHashed = security.hash.hexdigest()
         print(data['email'][0:5])
-        print(emailSaltHashed)
+        print(emailHashed)
 
 
 
-        if self.__dbsystem.redis_get_element(emailSaltHashed) == 'false':
+        if self.__dbsystem.redis_get_element(emailHashed) == 'false':
             result_dict = {
                  'userDto': {'id': '', 'userName': '', 'email': '', 'role': ''},
                 'status': 'failed'}
@@ -26,7 +26,7 @@ class User:
         else:
             security.hash.update(data['password'].encode('utf-8'))
             passwordHashed = security.hash.hexdigest()
-            temporary = self.__dbsystem.redis_get_element(emailSaltHashed)
+            temporary = self.__dbsystem.redis_get_element(emailHashed)
             if  temporary.decode() == passwordHashed:
                 with self.__dbsystem.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
                     try:
@@ -48,13 +48,11 @@ class User:
     def sign_in(self):
         data = request.get_json()
         security = Security()
-
-        if self.__dbsystem.redis_get_element(data['email']) == 'false':
-
-            security.hash.update(data['email'][0:5].encode('utf-8'))
-            emailSaltHashed = security.hash.hexdigest()
+        security.hash.update(data['email'][0:5].encode('utf-8'))
+        emailHashed = security.hash.hexdigest()
+        if self.__dbsystem.redis_get_element(emailHashed) == 'false':
             print(data['email'][0:5])
-            print(emailSaltHashed)
+            print(emailHashed)
 
 
             security.hash.update(data['password'].encode('utf-8'))
