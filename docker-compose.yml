@@ -33,12 +33,25 @@ services:
       - mongodb_data:/data/db
     restart: always
 
-
 #  backend:
 #    build:
-#      context: ./BackEnd
+#      context: .
+#      dockerfile: BackEnd/Dockerfile
+#    image: your_image_name
 #    ports:
-#      - "5000:5000"
+#      - "8000:8000"  # Adjust the port as needed
+#    volumes:
+#      - ./BackEnd:/BackEnd  # Mount the BackEnd directory into the container
+#    command: [ "python", "/BackEnd/main.py" ]
+
+#  frontend:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    ports:
+#      - "80:80"
+#    depends_on:
+#      - backend
 
 volumes:
   postgres_data:

@@ -1,16 +1,16 @@
-FROM python:3.12.1
-
+FROM python:3.11.1
 # Устанавливаем рабочий каталог внутри контейнера
-WORKDIR /BackEnd/
+WORKDIR /BackEnd
 
 # Копируем зависимости
-COPY requirements.txt ./
+COPY BackEnd/requirements.txt ./
 
 # Устанавливаем зависимости
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install  -r requirements.txt
+RUN pip install flask_cors
 
 # Копируем все файлы приложения
-COPY ../../../Desktop .
+COPY BackEnd/ .
 
 # Команда для запуска приложения
-CMD ["python", "main.py"]
+CMD ["python", "./main.py"]

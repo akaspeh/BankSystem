@@ -1,8 +1,8 @@
 from flask import jsonify
-from BackEnd.DBSystem.DBs.Redis import *
-from BackEnd.DBSystem.DBs.PostGres import *
-from BackEnd.DBSystem.DBs.Mongo import *
-from BackEnd.Config import *
+from .DBs.Redis import *
+from .DBs.PostGres import *
+from .DBs.Mongo import *
+from .DBs.Config import *
 import logging
 import redis
 from datetime import *

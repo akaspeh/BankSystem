@@ -10,10 +10,11 @@ class User:
     def login(self):
         data = request.get_json()
         security = Security()
+        security1 = Security()
 
         security.hash.update(data['email'][0:5].encode('utf-8'))
-        emailHashed = security.hash.hexdigest()
-
+        security1.hash.update(data['email'].encode('utf-8'))
+        emailHashed = security1.hash.hexdigest()
 
 
         if self.__dbsystem.redis_get_element(emailHashed) == 'false':
@@ -51,8 +52,10 @@ class User:
     def sign_in(self):
         data = request.get_json()
         security = Security()
+        security1 = Security()
+        security1.hash.update(data['email'].encode('utf-8'))
         security.hash.update(data['email'][0:5].encode('utf-8'))
-        emailHashed = security.hash.hexdigest()
+        emailHashed = security1.hash.hexdigest()
         if self.__dbsystem.redis_get_element(emailHashed) == 'false':
 
 

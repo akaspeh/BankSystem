@@ -3,7 +3,8 @@ from DBSystem.DBsystem import *
 from flask_cors import CORS
 from flask import Flask, jsonify, request
 from Classes.BANK import BANK
-
+import sys
+print(sys.path)
 class Application:
     def __init__(self):
         self.app = Flask(__name__)
