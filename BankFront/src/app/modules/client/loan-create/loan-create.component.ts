@@ -88,8 +88,6 @@ export class LoanCreateComponent implements OnInit {
           console.error('Error creating loan', error);
         }
       });
-      this.closeModal()
-      this.router.navigate(['/client']);
     }
   }
   public openDialog() {
