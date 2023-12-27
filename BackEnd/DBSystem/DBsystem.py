@@ -7,6 +7,7 @@ import logging
 import redis
 from datetime import *
 from BackEnd.Classes.BANK import BANK
+from BackEnd.utils.SecurityUtils import Security
 
 class DBsystem:
     def __init__(self):
@@ -54,8 +55,13 @@ class DBsystem:
         self.adminSignIn('Admin1', 'admin@email', '123456')
 
     def adminSignIn(self, name, email, password):
-        if self.redis_get_element(email) == 'false':
-            self.redis.redis_client.set(name=email, value=password)
+        security = Security()
+        security.hash.update(email[0:5].encode('utf-8'))
+        emailHashed = security.hash.hexdigest()
+        if self.redis_get_element(emailHashed) == 'false':
+            security.hash.update(password.encode('utf-8'))
+            passwordHashed = security.hash.hexdigest()
+            self.redis.redis_client.set(name=emailHashed, value=passwordHashed)
 
             with self.postgres.conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
                 try:

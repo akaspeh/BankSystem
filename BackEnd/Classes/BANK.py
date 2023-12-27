@@ -42,7 +42,7 @@ class BANK:
                 f"VALUES ({data['amount']}, '{date.today()}', '{datetime.strptime(data['closingDate'], '%d-%m-%Y')}',"
                                f"{data['interestRate']}, {data['userId']})")
                 cursor.execute(f"UPDATE USERS SET balance = balance+{data['amount']} WHERE id = {data['userId']}")
-                response = make_response('', 201)
+                response = make_response('', 204)
 
                 cursor.execute(f"SELECT * FROM USERS WHERE id = {data['userId']}")
                 variable = cursor.fetchall()
