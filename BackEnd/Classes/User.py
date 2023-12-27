@@ -41,6 +41,7 @@ class User:
                         result_dict = {
                             'userDto': {'id': '', 'userName': '', 'email': '', 'role': ''},
                             'status': 'failed'}
+
                         return jsonify(result_dict)
             else:
                 result_dict = {
